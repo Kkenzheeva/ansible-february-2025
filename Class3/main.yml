@@ -1,0 +1,19 @@
+- hosts: all
+  become: yes
+  tasks:
+- name: Install Apache
+  include: apache.yml
+- name: Install php
+  include: php.yml
+
+- name: Install Wordpress
+  include: wordpress.yml
+
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /tmp/wordpress/.
+    dest: /var/www/html
+    owner: www-data
+    group: www-data
+    mode: '0755'
+    remote_src: yes
